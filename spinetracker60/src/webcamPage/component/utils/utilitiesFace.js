@@ -1,4 +1,5 @@
 //  Triangulation sets of three
+import * as app from "../UserCam"
 export const TRIANGULATION = [
     127,
     34,
@@ -2657,7 +2658,15 @@ export const TRIANGULATION = [
     ctx.strokeStyle = "grey";
     ctx.stroke(region);
   };
-  
+  export let eye_height = '';
+  export let face_size = '';
+  export let face_dot_height = '';
+  let last_eye_close = '';
+  let last_eye_open = '';
+  let last_turtle_neck = '';
+  let last_normal_neck = '';
+  let last_low_hip = '';
+  let last_normal_hip = '';
   // Drawing Mesh
   export const drawMesh = (predictions, ctx) => {
     if (predictions.length > 0) {
@@ -2666,20 +2675,65 @@ export const TRIANGULATION = [
           keypoints.x,
           keypoints.y
         ]);
-        //  Draw Triangles
-        for (let i = 0; i < TRIANGULATION.length / 3; i++) {
-          // Get sets of three keypoints for the triangle
-          const points = [
-            TRIANGULATION[i * 3],
-            TRIANGULATION[i * 3 + 1],
-            TRIANGULATION[i * 3 + 2]
-          ].map((index) => keypoints[index]);
-          //  Draw triangle
-          drawPath(ctx, points, true);
+        //  Draw lines
+        // Get sets of three keypoints for the triangle
+        const points = [
+          10,338,297,332,284,251,389,356,454,323,361,288,397,365,379,378,400,377,152,148,176,149,150,136,172,58,132,93,234,127,162,21,54,103,67,109
+        ].map((index) => keypoints[index]);
+        //  Draw lines
+        drawPath(ctx, points, true);
+        face_dot_height = keypoints[10][1];
+        //what we made
+        let face_height = keypoints[10][1] - keypoints[152][1]
+        eye_height = ((keypoints[145][1] - keypoints[159][1]) + (keypoints[374][1] - keypoints[386][1])) + (1 / 1e9) / 2;
+        // 얼굴에서 눈이 차지하는 비율 만약에 그냥 eye_height로 사용하게되면 얼굴이 뒤로 갔을때 눈이 작아지면 감은것으로 인식함
+        // 하지만 얼굴비율로 하게 되면 뒤로가도 비율은 유지
+        // eye_ratio = (face_height / eye_height);
+        // console.log("눈의 크기",eye_height);
+        
+        let face_width = keypoints[234][0] - keypoints[454][0]
+        face_size = face_height * face_width
+        // console.log("얼굴의 크기",face_size);
+        let nowTime = Math.floor(new Date().getTime() / 1000);
+        
+        if(app.firstEyeHeight){
+
+          if(eye_height < app.firstEyeHeight - 4){
+            last_eye_close = nowTime;
+            if(last_eye_close - last_eye_open > 6){
+              console.log("이사람 자고있어요");             
+            }
+          }else{
+            last_eye_open = nowTime;
+            
+          }
+          
         }
-  
+
+        if(app.firstFaceSize){
+          if(face_size > 1.1 * app.firstFaceSize){
+            last_turtle_neck = nowTime;
+            if(last_turtle_neck - last_normal_neck > 6){
+                console.log("이사람 거북이에요");             
+              }
+            }else{
+              last_normal_neck = nowTime;
+            }
+        }
+        if(app.firstFaceDotHeight){
+          if(face_dot_height > 30 + app.firstFaceDotHeight){
+            last_low_hip = nowTime;
+            if(last_low_hip - last_normal_hip > 6){
+                console.log("이사람 누워있어요");             
+              }
+            }else{
+              last_normal_hip = nowTime;
+            }
+        }
         // Draw Dots
-        for (let i = 0; i < keypoints.length; i++) {
+          //for (let i = 0; i < keypoints.length; i++) {
+          
+          for (let i of [159,145,386,374]) {
           const x = keypoints[i][0];
           const y = keypoints[i][1];
   
@@ -2690,5 +2744,8 @@ export const TRIANGULATION = [
         }
       });
     }
+    
   };
+
+  
   
