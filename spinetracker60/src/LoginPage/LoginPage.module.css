@@ -1,0 +1,47 @@
+body{
+background: var(--cool-gray-10, #F2F4F8);
+}
+@font-face {
+    font-family: sans;
+    src: url(/public/fonts/FaberSansPro75reduced.ttf);
+}
+@font-face {
+    font-family: roboto;
+    src: url(/public/fonts/Roboto-Light.ttf);
+}
+.loginContainer{
+    margin: 0 auto;
+    position: absolute;
+    top:  25%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+}
+.cheokchu1{
+    color: var(--neutral-colors-headings-black, #5D5A88);
+    font-feature-settings: 'clig' off, 'liga' off;
+
+    font-family: sans;
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 10px
+}
+.cheokchu2{
+    color: var(--neutral-colors-text-gray, #9795B5);
+    
+    font-family: roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    margin-left: 5px;
+}
+.signInBtn{
+    margin: 7px;
+    position: relative;
+    top: 150px;
+    
+}
+.kakaoBtn{
+    margin-left: 13px;
+}
