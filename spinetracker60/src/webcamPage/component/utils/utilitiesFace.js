@@ -1,5 +1,7 @@
 //  Triangulation sets of three
 import * as app from "../UserCam"
+import dayjs from "dayjs";
+
 export const TRIANGULATION = [
     127,
     34,
@@ -2661,12 +2663,62 @@ export const TRIANGULATION = [
   export let eye_height = '';
   export let face_size = '';
   export let face_dot_height = '';
-  let last_eye_close = '';
-  let last_eye_open = '';
-  let last_turtle_neck = '';
-  let last_normal_neck = '';
-  let last_low_hip = '';
-  let last_normal_hip = '';
+  export let last_eye_close = '';
+  export let last_eye_open = '';
+  export let last_turtle_neck = '';
+  export let last_normal_neck = '';
+  export let last_low_hip = '';
+  export let last_normal_hip = '';
+  let last_eye_close2 = '';
+  let last_eye_open2 = '';
+  let last_turtle_neck2 = '';
+  let last_normal_neck2 = '';
+  let last_low_hip2 = '';
+  let last_normal_hip2 = '';
+  let sleep_start_date = '';
+  let turtle_start_date = '';
+  let lean_start_date = '';
+  export let sleepTime = '';
+  export let turtleTime = '';
+  export let leanTime = '';
+  export let sleepList = [];
+  export let turtleList = [];
+  export let leanList = [];
+
+  export const initParam=()=>{
+    if(last_eye_close - last_eye_open > 6000){
+      sleepTime = sleepTime + last_eye_close - last_eye_open;
+      let sleep = { 
+        "posture_tag" : "SLEEP",
+        "date" : sleep_start_date,
+        "start_time" : last_eye_open2,
+        "end_time" : last_eye_close2,
+      }
+      sleepList.push(sleep);
+    }
+    if(last_turtle_neck - last_normal_neck > 6000){
+      turtleTime = turtleTime + last_turtle_neck - last_normal_neck;
+    let turtle = { 
+      "posture_tag" : "TEXTNECK",
+      "date" : turtle_start_date,
+      "start_time" : last_normal_neck2,
+      "end_time" : last_turtle_neck2,
+    }
+    turtleList.push(turtle);
+  };
+  if(last_low_hip - last_normal_hip > 6000){
+    leanTime = leanTime + last_low_hip - last_normal_hip;
+    let lean = { 
+      "posture_tag" : "LEAN",
+      "date" : lean_start_date,
+      "start_time" : last_normal_hip2,
+      "end_time" : last_low_hip2,
+    }
+    leanList.push(lean);
+  };
+
+    
+  }
   // Drawing Mesh
   export const drawMesh = (predictions, ctx) => {
     if (predictions.length > 0) {
@@ -2694,40 +2746,80 @@ export const TRIANGULATION = [
         let face_width = keypoints[234][0] - keypoints[454][0]
         face_size = face_height * face_width
         // console.log("얼굴의 크기",face_size);
-        let nowTime = Math.floor(new Date().getTime() / 1000);
+        let nowTime = Math.floor(new Date().getTime());
+        let nowTimeFix = dayjs().format("HH:mm:ss");
+        let nowTimeFix2 = dayjs().format("YYYY-MM-DD");
         
         if(app.firstEyeHeight){
-
           if(eye_height < app.firstEyeHeight - 4){
             last_eye_close = nowTime;
-            if(last_eye_close - last_eye_open > 6){
+            last_eye_close2 = nowTimeFix2;
+            if(last_eye_close - last_eye_open > 6000){
               console.log("이사람 자고있어요");             
             }
           }else{
+            if(last_eye_close - last_eye_open > 6000){
+              sleepTime = sleepTime + last_eye_close - last_eye_open;
+              let sleep = { 
+                "posture_tag" : "SLEEP",
+                "date" : sleep_start_date,
+                "start_time" : last_eye_open2,
+                "end_time" : last_eye_close2,
+              }
+              sleepList.push(sleep);
+            }
             last_eye_open = nowTime;
-            
-          }
-          
+            last_eye_open2 = nowTimeFix;
+            sleep_start_date = nowTimeFix2;
+          }         
         }
 
         if(app.firstFaceSize){
           if(face_size > 1.1 * app.firstFaceSize){
             last_turtle_neck = nowTime;
-            if(last_turtle_neck - last_normal_neck > 6){
+            last_turtle_neck2 = nowTimeFix;
+            if(last_turtle_neck - last_normal_neck > 6000){
                 console.log("이사람 거북이에요");             
               }
             }else{
+              if(last_turtle_neck - last_normal_neck > 6000){
+                turtleTime = turtleTime + last_turtle_neck - last_normal_neck;
+                let turtle = { 
+                  "posture_tag" : "TEXTNECK",
+                  "date" : turtle_start_date,
+                  "start_time" : last_normal_neck2,
+                  "end_time" : last_turtle_neck2,
+                }
+                turtleList.push(turtle);
+              }
               last_normal_neck = nowTime;
+              last_normal_neck2 = nowTimeFix;
+              turtle_start_date = nowTimeFix2;
             }
         }
+
+
         if(app.firstFaceDotHeight){
           if(face_dot_height > 30 + app.firstFaceDotHeight){
             last_low_hip = nowTime;
-            if(last_low_hip - last_normal_hip > 6){
+            last_low_hip2 = nowTimeFix;
+            if(last_low_hip - last_normal_hip > 6000){
                 console.log("이사람 누워있어요");             
               }
             }else{
+              if(last_low_hip - last_normal_hip > 6000){
+                leanTime = leanTime + last_low_hip - last_normal_hip;
+                let lean = { 
+                  "posture_tag" : "LEAN",
+                  "date" : lean_start_date,
+                  "start_time" : last_normal_hip2,
+                  "end_time" : last_low_hip2,
+                }
+                leanList.push(lean);
+              }
               last_normal_hip = nowTime;
+              last_normal_hip2 = nowTimeFix;
+              lean_start_date = nowTimeFix2;
             }
         }
         // Draw Dots

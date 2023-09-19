@@ -16,6 +16,8 @@
  */
 import * as posenet from '@tensorflow-models/posenet';
 import * as tf from '@tensorflow/tfjs-core';
+import dayjs from 'dayjs';
+import * as app from '../UserCam'
 
 const color = 'aqua';
 const boundingBoxColor = 'red';
@@ -111,8 +113,25 @@ export function drawSkeleton(keypoints, minConfidence, ctx, scale = 1) {
 /**
  * Draw pose keypoints onto a canvas
  */
-let last_normal_shoulder = '';
-let last_wrong_shoulder = '';
+export let last_normal_shoulder = '';
+export let last_wrong_shoulder = '';
+let last_normal_shoulder2 = '';
+let last_wrong_shoulder2 = '';
+let shoulder_start_date = '';
+export let shoulderTime = '';
+export let shoulderList = [];
+export const initParam = () => {
+  if(last_wrong_shoulder - last_normal_shoulder > 6000){
+    shoulderTime = shoulderTime + last_wrong_shoulder - last_normal_shoulder;
+    let shoulder = {
+      "posture_tag" : "SHOULDER",
+            "date" : shoulder_start_date,
+            "start_time" : last_normal_shoulder2,
+            "end_time" : last_wrong_shoulder2,
+    }
+    shoulderList.push(shoulder);
+  };
+}
 export function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
   for (let i = 0; i < keypoints.length; i++) {
     const keypoint = keypoints[i];
@@ -124,16 +143,32 @@ export function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
     const {y, x} = keypoint.position;
     drawPoint(ctx, y * scale, x * scale, 3, color);
   }
-  let nowTime = Math.floor(new Date().getTime() / 1000);
-  if(keypoints[5] && keypoints[6]){
+  let nowTime = Math.floor(new Date().getTime());
+  let nowTimeFix = dayjs().format("HH:mm:ss");
+  let nowTimeFix2 = dayjs().format("YYYY-MM-DD");
+  if(keypoints[5] && keypoints[6] && app.firstFaceSize){
     
     if(Math.abs(keypoints[5].position.y - keypoints[6].position.y) > 30){
       last_wrong_shoulder = nowTime;
-      if(last_wrong_shoulder - last_normal_shoulder > 6){
+      last_wrong_shoulder2 = nowTimeFix;
+      if(last_wrong_shoulder - last_normal_shoulder > 6000){
         console.log("어깨가 이상해요");
       }
     }else{
+      if((last_wrong_shoulder - last_normal_shoulder > 6000) && last_normal_shoulder2){
+        shoulderTime = shoulderTime + last_wrong_shoulder - last_normal_shoulder;
+        let shoulder = {
+          "posture_tag" : "SHOULDER",
+          "date" : shoulder_start_date,
+          "start_time" : last_normal_shoulder2,
+          "end_time" : last_wrong_shoulder2,
+        }
+        shoulderList.push(shoulder);
+      }
       last_normal_shoulder = nowTime;
+      last_normal_shoulder2 = nowTimeFix;
+      shoulder_start_date = nowTimeFix2;
+      
     }
   }
 }

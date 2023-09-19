@@ -4,8 +4,11 @@ import * as tf from "@tensorflow/tfjs";
 import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import { drawMesh } from "./utils/utilitiesFace";
 import * as util from "./utils/utilitiesFace";
+import * as util2 from "./utils/utilitiesPose";
 import * as posenet from "@tensorflow-models/posenet";
 import { drawKeypoints , drawSkeleton } from "./utils/utilitiesPose";
+import timeCalculator from "./utils/timeCalculator";
+import dayjs from "dayjs";
 
 let detector;
 export let firstEyeHeight = '';
@@ -99,6 +102,45 @@ function UserCam() {
     firstFaceDotHeight = util.face_dot_height;
   }
   
+  const onClickStart = () => {
+    const nowDay = dayjs().format("YYYY-MM-DD");
+    const nowTime = dayjs().format("HH:mm:ss");
+    const start = {
+      "posture_tag" : "START",
+      "date" : nowDay,
+      "start_time" : nowTime,
+      "end_time" : nowTime,
+    }
+    console.log(start);
+  }
+  const onClickEnd = () => {
+    const nowDay = dayjs().format("YYYY-MM-DD");
+    const nowTime = dayjs().format("HH:mm:ss");
+    const end = {
+    "posture_tag" : "END",
+    "date" : nowDay,
+    "start_time" : nowTime,
+    "end_time" : nowTime,
+  }
+  console.log(end);
+  util.initParam();
+  util2.initParam();
+  firstEyeHeight = '';
+  firstFaceSize = '';
+  firstFaceDotHeight = '';
+  }
+
+  const onClickHandler3 = () => {
+    console.log("거북목" , timeCalculator(util.turtleTime));
+    console.log("거북목 목록" , util.turtleList);
+    console.log("잠", timeCalculator(util.sleepTime));
+    console.log("수면실 목록", util.sleepList);
+    console.log("누움", timeCalculator(util.leanTime));
+    console.log("누운 목록", util.leanList);
+    console.log("어깨", timeCalculator(util2.shoulderTime));
+    console.log("어깨 목록" , util2.shoulderList);
+  }
+  
   
   
 
@@ -139,7 +181,10 @@ function UserCam() {
           }}
         />
         <div>
-        <button type="button" onClick={onClickHandler}>현재 시간 저장</button>
+        <button type="button" onClick={onClickHandler}>자세 저장</button>
+        <button type="button" onClick={onClickStart}>시작 시간 저장</button>
+        <button type="button" onClick={onClickEnd}>종료 시간 저장</button>
+        <button type="button" onClick={onClickHandler3}>시간 계산</button>
         </div>
     </div>
     

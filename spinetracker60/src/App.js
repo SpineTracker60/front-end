@@ -1,8 +1,15 @@
-import WebcamPage from "./WebcamPage/WebcamPage";
+import Routing from './route/routing';
+import {BrowserRouter as Router} from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion';
 
 function App(){
+    
     return(
-        <WebcamPage/>
+        <Router>
+            <AnimatePresence>
+                <Routing/>
+            </AnimatePresence>
+        </Router>
     )
 }
 
