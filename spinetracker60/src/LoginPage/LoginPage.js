@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
-import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
-import { Navigate } from 'react-router-dom';
+import React from 'react';
+import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL} from '../constants';
+import { useNavigate } from 'react-router-dom';
 import style from './LoginPage.module.css';
 import { motion } from 'framer-motion'; 
+import { useEffect } from 'react';
 
 function LoginPage(props) {
+    const navigate = useNavigate();
     // useEffect(() => {
     //     if (props.location.state && props.location.state.error) {
     //         setTimeout(() => {
-    //             alert.error(props.location.state.error, {
+    //             alert(props.location.state.error, {
     //                 timeout: 5000
     //             });
     //             props.history.replace({
@@ -18,14 +20,12 @@ function LoginPage(props) {
     //         }, 100);
     //     }
     // }, [props.location.state, props.history]);
-
-    // if (props.authenticated) {
-    //     return <Navigate
-    //         to={{
-    //             pathname: "/",
-    //             state: { from: props.location }
-    //         }} />;
-    // }
+    useEffect(() =>{
+    if (props.authenticated) {
+        navigate('/userInfo')
+        // navigate('/userInfo',{ state: { from: location } });
+    }
+    },[]);
 
     return (
         
@@ -46,9 +46,9 @@ function SocialLogin() {
     return (
         <div className={style.signInBtn}>
             <a className={style.googleBtn} href={GOOGLE_AUTH_URL}>
-                <img src='/img/googleSignIn.png'/></a>
+                <img src='/img/googleSignIn.png' alt='구글'/></a>
             <a className={style.kakaoBtn} href={KAKAO_AUTH_URL}>
-                <img src='/img/KakaoSignIn.png'/></a>
+                <img src='/img/KakaoSignIn.png' alt='카카오'/></a>
         </div>
     );
 }

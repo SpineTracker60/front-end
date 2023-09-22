@@ -30,23 +30,23 @@ export function getCurrentUser() {
     }
 
     return request({
-        url: API_BASE_URL + "/auth/",
+        url: API_BASE_URL + "/member/",
         method: 'GET'
     });
 };
 
-export function login(loginRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/signin",
-        method: 'POST',
-        body: JSON.stringify(loginRequest)
-    });
-};
+// export function login(loginRequest) {
+//     return request({
+//         url: API_BASE_URL + "/auth/signin",
+//         method: 'POST',
+//         body: JSON.stringify(loginRequest)
+//     });
+// };
 
-export function signup(signupRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/signup",
-        method: 'POST',
-        body: JSON.stringify(signupRequest)
-    });
-};
+// export function signup(signupRequest) {
+//     return request({
+//         url: API_BASE_URL + "/auth/signup",
+//         method: 'POST',
+//         body: JSON.stringify(signupRequest)
+//     });
+// };

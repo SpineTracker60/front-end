@@ -12,14 +12,14 @@ background: var(--cool-gray-10, #F2F4F8);
 .loginContainer{
     margin: 0 auto;
     position: absolute;
-    top:  25%;
+    top:  30%;
     left: 15%;
     transform: translate(-50%, -50%);
 }
 .cheokchu1{
     color: var(--neutral-colors-headings-black, #5D5A88);
     font-feature-settings: 'clig' off, 'liga' off;
-
+    
     font-family: sans;
     font-size: 56px;
     font-style: normal;
@@ -34,6 +34,8 @@ background: var(--cool-gray-10, #F2F4F8);
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+
+    margin-top: 10%;
     margin-left: 5px;
 }
 .signInBtn{

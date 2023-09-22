@@ -1,9 +1,10 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function OAuth2RedirectHandler() {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const getUrlParameter = (name) => {
         name = name.replace(/[\\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -12,26 +13,21 @@ function OAuth2RedirectHandler() {
         const results = regex.exec(location.search);
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     };
-
+    useEffect(()  =>{
     const token = getUrlParameter('token');
     const error = getUrlParameter('error');
 
+
     if (token) {
         localStorage.setItem(ACCESS_TOKEN, token);
-        localStorage.setItem(REFRESH_TOKEN, null);
-        return <Navigate to={{
-            pathname: "/profile",
-            state: { from: location }
-        }} />;
-    } else {
-        return <Navigate to={{
-            pathname: "/login",
-            state: {
-                from: location,
-                error: error
-            }
-        }} />;
+        localStorage.setItem(REFRESH_TOKEN, null); 
+        navigate('/userInfo');     
+    }else{
+        navigate('/');
     }
+        
+    },
+    []);
 }
 
 export default OAuth2RedirectHandler;
