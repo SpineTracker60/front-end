@@ -1,0 +1,156 @@
+
+@font-face {
+    font-family: pretendard;
+    src: url(/public/fonts/PretendardVariable.ttf);
+}
+.sideDiv{
+    display: flex;
+}
+.sideBarDiv{
+    width: 384px;
+    /* display: flex; */
+    height: 955px;
+    /* flex-direction: column; */
+    /* justify-content: flex-end; */
+    /* align-items: center; */
+    /* flex-shrink: 0; */
+
+    background: var(--cool-gray-10, #F2F4F8);
+
+    box-shadow: 0px 24px 48px 0px rgba(0, 0, 0, 0.20);
+}
+.userImg{
+    width: 70px;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 39px;
+    position: relative;
+    top: 40px;
+    left: 40px;
+}
+.userName{
+    color: #000;
+    font-family: pretendard;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px; /* 200% */
+    position: relative;
+    
+    left: 130px;
+    bottom: 15px;
+}
+.chatBotBtn2{
+    position: absolute;
+    margin: 0 auto; 
+    
+    top:  92%;
+    left: 95%; 
+    transform: translate(-50%, -50%);
+}
+
+.noticeBoardBtnDiv{
+    margin-top: 70px;
+    margin-left: 60px;
+}
+.noticeBoardBtn{
+    border: none;
+    background-color: transparent;
+    color: var(--cool-gray-70, #4D5358);
+    font-family: pretendard;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%;
+}
+.noticeBoardImg{
+    margin-right: 13px;
+    position: relative;
+    top: 3px
+}
+
+.chartBtnDiv{
+    margin-top: 20px;
+    margin-left: 60px;
+}   
+.chartBtn{
+    border: none;
+    background-color: transparent;
+    color: var(--cool-gray-70, #4D5358);
+    font-family: pretendard;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%;
+}
+.chartImg{
+    margin-right: 13px;
+    position: relative;
+    top: 3px
+}
+
+.userInfoBtnDiv{
+    margin-top: 20px;
+    margin-left: 60px;
+}
+.userInfoBtn{
+    border: none;
+    background-color: transparent;
+    color: var(--cool-gray-70, #4D5358);
+    font-family: pretendard;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%;
+}
+.userInfoImg{
+    margin-right: 13px;
+    position: relative;
+    top: 3px
+}
+
+.logoutBtnDiv{
+    margin-top: 590px;
+    margin-left: 60px;
+    
+}
+.logoutBtn{
+    border: none;
+    background-color: transparent;
+    color: var(--cool-gray-60, #697077);
+    font-family: pretendard;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    
+}
+.logoutImg{
+    margin-right: 11px;
+    position: relative;
+    top: 4px
+}
+
+
+/* 모달 */
+
+.none{
+    display: none;
+}
+
+
+
+
+/* 챗 봇 */
+
+.chatBotBtn{
+    display: none;
+    position: absolute;
+    margin: 0 auto; 
+    
+    top:  50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}

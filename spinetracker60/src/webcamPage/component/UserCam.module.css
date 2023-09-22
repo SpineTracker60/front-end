@@ -1,0 +1,26 @@
+
+.cameraDiv{
+    position: absolute;
+    display: flex;
+    margin: 0 auto;
+    top:  15%;
+    left: 768px;
+    transform: translate(-50%, -50%);
+}
+.cameraDiv2{
+    position: absolute;
+    display: flex;
+    margin: 0 auto;
+    top:  15%;
+    left: 510px;
+    transform: translate(-50%, -50%);
+}
+
+.buttonDiv{
+    position: absolute;
+    display: flex;
+    margin: 0 auto;
+    top:  85%;
+    left: 1200px;
+    transform: translate(-50%, -50%);
+}
