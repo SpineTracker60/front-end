@@ -1,5 +1,5 @@
 import Webcam from "react-webcam";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import { drawMesh } from "./utils/utilitiesFace";
@@ -9,14 +9,20 @@ import * as posenet from "@tensorflow-models/posenet";
 import { drawKeypoints , drawSkeleton } from "./utils/utilitiesPose";
 import timeCalculator from "./utils/timeCalculator";
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
+import style from "./UserCam.module.css"
 
 let detector;
 export let firstEyeHeight = '';
 export let firstFaceSize = '';
 export let firstFaceDotHeight = '';
-function UserCam() {
+function UserCam(props) {
+  
+  const [cameraState, setCameraState] = useState(false);
+  
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+
 
   const runFacemesh = async () => {
     const net = facemesh.SupportedModels.MediaPipeFaceMesh;
@@ -93,14 +99,7 @@ function UserCam() {
     drawSkeleton(pose["keypoints"], 0.5, ctx);
   }
   }
-  const onClickHandler = () => { 
-    console.log(util.eye_height);
-    console.log(util.face_size);
-    console.log(util.face_dot_height);
-    firstEyeHeight = util.eye_height;
-    firstFaceSize = util.face_size;
-    firstFaceDotHeight = util.face_dot_height;
-  }
+  
   
   const onClickStart = () => {
     const nowDay = dayjs().format("YYYY-MM-DD");
@@ -112,6 +111,13 @@ function UserCam() {
       "end_time" : nowTime,
     }
     console.log(start);
+    console.log(util.eye_height);
+    console.log(util.face_size);
+    console.log(util.face_dot_height);
+    firstEyeHeight = util.eye_height;
+    firstFaceSize = util.face_size;
+    firstFaceDotHeight = util.face_dot_height;
+    setCameraState(!cameraState);
   }
   const onClickEnd = () => {
     const nowDay = dayjs().format("YYYY-MM-DD");
@@ -129,7 +135,7 @@ function UserCam() {
   firstFaceSize = '';
   firstFaceDotHeight = '';
   }
-
+  
   const onClickHandler3 = () => {
     console.log("거북목" , timeCalculator(util.turtleTime));
     console.log("거북목 목록" , util.turtleList);
@@ -141,54 +147,111 @@ function UserCam() {
     console.log("어깨 목록" , util2.shoulderList);
   }
   
-  
-  
-
-  useEffect(() => {
+useEffect(() => {
     runFacemesh();
     runPosenet();
-  }, []);
 
+  },[cameraState]);
+
+if (!cameraState){
   return (
-    <div className="UserCam">
-        <Webcam
-          ref={webcamRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480
-          }}
-        />
+    <>
+      <motion.div className={style.cameraDiv}
+          animate={{
+            x: 0,
+            y: 0,
+            scale: 1.2,
+            rotate: 0,
+          }}>
+          <Webcam
+            ref={webcamRef}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 0,
+              right: 0,
+              textAlign: "center",
+              zindex: 9,
+              width: 640,
+              height: 480
+            }}
+          />
 
-        <canvas
-          ref={canvasRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480
-          }}
-        />
-        <div>
-        <button type="button" onClick={onClickHandler}>자세 저장</button>
-        <button type="button" onClick={onClickStart}>시작 시간 저장</button>
-        <button type="button" onClick={onClickEnd}>종료 시간 저장</button>
-        <button type="button" onClick={onClickHandler3}>시간 계산</button>
-        </div>
-    </div>
+          <canvas
+            ref={canvasRef}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 0,
+              right: 0,
+              textAlign: "center",
+              zindex: 9,
+              width: 640,
+              height: 480
+            }}
+          />
+          
+      </motion.div>
+      <div className={style.buttonDiv}>
+          <button type="button" onClick={onClickStart}>시작</button>
+          <button type="button" onClick={onClickEnd}>종료</button>
+          <button type="button" onClick={onClickHandler3}>시간 계산</button>
+      </div>
+    </>
     
   );
+  }else{
+    return(
+    <>
+    
+    <motion.div className={style.cameraDiv2}
+          animate={{
+            x: 0,
+            y: 565,
+            scale: 0.45,
+            rotate: 0,
+          }}>
+          <Webcam
+            ref={webcamRef}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 0,
+              right: 0,
+              textAlign: "center",
+              zindex: 9,
+              width: 640,
+              height: 480
+            }}
+          />
+
+          <canvas
+            ref={canvasRef}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 0,
+              right: 0,
+              textAlign: "center",
+              zindex: 9,
+              width: 640,
+              height: 480
+            }}
+          />
+      </motion.div>
+      
+      <div className={style.buttonDiv}>
+          <button type="button" onClick={onClickStart}>시작</button>
+          <button type="button" onClick={onClickEnd}>종료</button>
+          <button type="button" onClick={onClickHandler3}>시간 계산</button>
+      </div>
+    </>
+    )
+  }
 }
 
 
