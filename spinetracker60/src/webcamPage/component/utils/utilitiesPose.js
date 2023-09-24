@@ -120,11 +120,12 @@ let last_wrong_shoulder2 = '';
 let shoulder_start_date = '';
 export let shoulderTime = '';
 export let shoulderList = [];
+export let updateShoulderList = [];
 export const initParam = () => {
   if(last_wrong_shoulder - last_normal_shoulder > 6000){
     shoulderTime = shoulderTime + last_wrong_shoulder - last_normal_shoulder;
     let shoulder = {
-      "posture_tag" : "SHOULDER",
+      "posture_tag" : "ASYMMETRY",
             "date" : shoulder_start_date,
             "start_time" : last_normal_shoulder2,
             "end_time" : last_wrong_shoulder2,
@@ -132,6 +133,11 @@ export const initParam = () => {
     shoulderList.push(shoulder);
   };
 }
+export const initPoseList = () => {
+  updateShoulderList = [];
+}
+
+
 export function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
   for (let i = 0; i < keypoints.length; i++) {
     const keypoint = keypoints[i];
@@ -158,12 +164,13 @@ export function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
       if((last_wrong_shoulder - last_normal_shoulder > 6000) && last_normal_shoulder2){
         shoulderTime = shoulderTime + last_wrong_shoulder - last_normal_shoulder;
         let shoulder = {
-          "posture_tag" : "SHOULDER",
+          "posture_tag" : "ASYMMETRY",
           "date" : shoulder_start_date,
           "start_time" : last_normal_shoulder2,
           "end_time" : last_wrong_shoulder2,
         }
         shoulderList.push(shoulder);
+        updateShoulderList.push(shoulder);
       }
       last_normal_shoulder = nowTime;
       last_normal_shoulder2 = nowTimeFix;

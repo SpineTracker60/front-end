@@ -2684,12 +2684,15 @@ export const TRIANGULATION = [
   export let sleepList = [];
   export let turtleList = [];
   export let leanList = [];
+  export let updateSleepList = [];
+  export let updateTurtleList = [];
+  export let updateLeanList = [];
 
   export const initParam=()=>{
     if(last_eye_close - last_eye_open > 6000){
       sleepTime = sleepTime + last_eye_close - last_eye_open;
       let sleep = { 
-        "posture_tag" : "SLEEP",
+        "posture_tag" : "SLEEPINESS",
         "date" : sleep_start_date,
         "start_time" : last_eye_open2,
         "end_time" : last_eye_close2,
@@ -2709,16 +2712,24 @@ export const TRIANGULATION = [
   if(last_low_hip - last_normal_hip > 6000){
     leanTime = leanTime + last_low_hip - last_normal_hip;
     let lean = { 
-      "posture_tag" : "LEAN",
+      "posture_tag" : "STOOPED",
       "date" : lean_start_date,
       "start_time" : last_normal_hip2,
       "end_time" : last_low_hip2,
     }
     leanList.push(lean);
   };
-
-    
   }
+
+  export const initFaceList = ()  => {
+    updateSleepList = [];
+    updateTurtleList = [];
+    updateLeanList = [];
+  }
+
+
+
+
   // Drawing Mesh
   export const drawMesh = (predictions, ctx) => {
     if (predictions.length > 0) {
@@ -2753,7 +2764,7 @@ export const TRIANGULATION = [
         if(app.firstEyeHeight){
           if(eye_height < app.firstEyeHeight - 4){
             last_eye_close = nowTime;
-            last_eye_close2 = nowTimeFix2;
+            last_eye_close2 = nowTimeFix;
             if(last_eye_close - last_eye_open > 6000){
               console.log("이사람 자고있어요");             
             }
@@ -2761,12 +2772,13 @@ export const TRIANGULATION = [
             if(last_eye_close - last_eye_open > 6000){
               sleepTime = sleepTime + last_eye_close - last_eye_open;
               let sleep = { 
-                "posture_tag" : "SLEEP",
+                "posture_tag" : "SLEEPINESS",
                 "date" : sleep_start_date,
                 "start_time" : last_eye_open2,
                 "end_time" : last_eye_close2,
               }
               sleepList.push(sleep);
+              updateSleepList.push(sleep);
             }
             last_eye_open = nowTime;
             last_eye_open2 = nowTimeFix;
@@ -2791,6 +2803,7 @@ export const TRIANGULATION = [
                   "end_time" : last_turtle_neck2,
                 }
                 turtleList.push(turtle);
+                updateTurtleList.push(turtle);
               }
               last_normal_neck = nowTime;
               last_normal_neck2 = nowTimeFix;
@@ -2810,12 +2823,13 @@ export const TRIANGULATION = [
               if(last_low_hip - last_normal_hip > 6000){
                 leanTime = leanTime + last_low_hip - last_normal_hip;
                 let lean = { 
-                  "posture_tag" : "LEAN",
+                  "posture_tag" : "STOOPED",
                   "date" : lean_start_date,
                   "start_time" : last_normal_hip2,
                   "end_time" : last_low_hip2,
                 }
                 leanList.push(lean);
+                updateLeanList.push(lean);
               }
               last_normal_hip = nowTime;
               last_normal_hip2 = nowTimeFix;
