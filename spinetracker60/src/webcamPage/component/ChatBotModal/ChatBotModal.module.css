@@ -1,0 +1,81 @@
+@font-face {
+    font-family: pretendard;
+    src: url(/public/fonts/PretendardVariable.ttf);
+}
+
+.frame{
+    border-radius: 20px;
+    background: var(--Chat-BG, #DCEAFF);
+    width: 384px;
+    height: 652px;
+    box-shadow: 8px 24px 48px 0px rgba(0, 0, 0, 0.20);
+}
+
+.topFrame{
+    width: 384px;
+    height: 86px;
+    background: #FFF;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    display: flex;
+}
+.chatBotImg{
+    width: 70px;
+    height: 70px;
+    margin: 2%;
+}
+.chatBotName{
+    color: var(--cool-gray-100, #121619);
+    text-align: center;
+    font-family: pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: -0.24px;
+    margin-top: 15px;
+}
+.chatBotIntro{
+    color: var(--cool-gray-70, #4D5358);
+    
+    font-family: pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px; 
+    margin-top: 43px;
+    position: relative;
+    right: 40px;
+}
+
+
+
+
+.bottomFrame{
+    position: absolute;
+    top: 585px;
+    width: 384px;
+    height: 72px;
+    background: var(--default-white, #FFF);
+    box-shadow: -4px 0px 12px 0px rgba(0, 0, 0, 0.10);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.chat{
+    width: 296px;
+    height: 38px;
+    border-radius: 12px;
+    border: 1px solid var(--cool-gray-20, #DDE1E6);
+    background: var(--cool-gray-10, #F2F4F8);
+    gap: 10px;
+    padding: 10px 10px;
+    margin-left: 15px;
+}
+.chatBtn{
+    border: none;
+    background-color: transparent;
+    position: relative;
+    top: 14px;
+    margin-left: 20px;
+}
