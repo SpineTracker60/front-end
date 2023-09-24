@@ -1,3 +1,13 @@
+
+@font-face {
+    font-family: pretendard;
+    src: url(/public/fonts/PretendardVariable.ttf);
+}
+li{
+    list-style: none;
+}
+
+
 .frameDiv{
     position: relative;
     width: 380px;
@@ -5,3 +15,117 @@
     box-shadow: 0px 24px 48px 0px rgba(0, 0, 0, 0.20), 0px -24px 48px 0px #FFF inset;
     z-index: -1;
 }
+
+.editTitleDiv{
+    display: flex;
+    position: relative;
+    top: 40px;
+    left: 40px;
+}
+.title{
+    color: #000;
+    font-family: pretendard;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: -0.24px;
+}
+
+.editBtn{
+    border: none;
+    background-color: transparent;
+    margin-left: 100px;
+}
+.editImg{
+    width: 35px;
+    height: 35px;
+}
+
+
+
+.noticeBoardDiv{
+    margin-top: 65px;
+    margin-left: 30px;
+    width: 350px;
+    height: 852px;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+.noticeBoardDiv .postCard{
+    max-width: 350px;
+    max-height: 168px;
+    display: flex;
+    
+}
+.noticeBoardDiv .postUserInfo{
+    display: flex;
+    padding-top: 15px;
+}
+
+.noticeBoardDiv .userImg{
+    width: 22px;
+    height: 22px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 18.15px;
+}
+.noticeBoardDiv .userName{
+    color: var(--cool-gray-60, #697077);
+    font-family: pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    position: relative;
+    left: 10px;
+    top: 3.5px;
+    
+
+}
+.noticeBoardDiv .postTitle{
+    color: var(--cool-gray-90, #21272A);
+    font-family: pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    margin-top: 5px;
+}
+.noticeBoardDiv .postBody{
+    color: var(--cool-gray-80, #343A3F);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+
+    margin-top: 5px;
+    width: 193px;
+    height: 45px;
+}
+.noticeBoardDiv .productLink{
+    color: var(--cool-gray-40, #A2A9B0);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+}
+.noticeBoardDiv .productImg{
+    width: 84px;
+    height: 130px;
+    margin-left: 25px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+.noticeBoardDiv .postHr{
+    width: 320px;
+    height: 0.8px;
+    background: #DDE1E6;
+    margin-top: 10px;
+}
+
