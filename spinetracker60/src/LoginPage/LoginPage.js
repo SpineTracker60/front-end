@@ -23,7 +23,6 @@ function LoginPage(props) {
     useEffect(() =>{
     if (props.authenticated) {
         navigate('/userInfo')
-        // navigate('/userInfo',{ state: { from: location } });
     }
     },[]);
 
