@@ -2,7 +2,9 @@
     font-family: pretendard;
     src: url(/public/fonts/PretendardVariable.ttf);
 }
-
+.none{
+    display: none;
+}
 .frame{
     border-radius: 20px;
     background: var(--Chat-BG, #DCEAFF);
@@ -86,6 +88,9 @@
     overflow-y: auto; 
     overflow-x: hidden;
 }
+.chattingArea{
+    margin-top: 40px;
+}
 .chatExample{
     display: flex;
 }
@@ -122,12 +127,19 @@
     justify-content: flex-end;
     align-items: center;
     color: var(--primary-90, #001D6C);
-    text-align: right;
     font-family: pretendard;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 22px;
+    text-align: center;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 111px;
+    min-height: 42px;
+    margin-left: 240px;
 }
 .chatBotChattingDiv{
     padding: 12px 14px;
@@ -143,4 +155,7 @@
     font-weight: 400;
     line-height: 22px; 
     width: 238px;
+}
+.chatBotChatFrame{
+    display: flex;
 }
