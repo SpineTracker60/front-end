@@ -14,19 +14,19 @@ function LoginQuestion(props) {
     const agreeTerms = useRef(null);
 
     const navigate = useNavigate();
-    useEffect(() => {
-    axios.get(API_BASE_URL + '/member/info/added',{
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-        }
-    })
-    .then(function (response) {
-        if(response.data.is_added){
-            navigate('/main');
-        };
-    });
-    },
-    []);
+    // useEffect(() => {
+    // axios.get(API_BASE_URL + '/member/info/added',{
+    //     headers: {
+    //         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    //     }
+    // })
+    // .then(function (response) {
+    //     if(response.data.is_added){
+    //         navigate('/main');
+    //     };
+    // });
+    // },
+    // []);
 
     const buttonChangeStyle = () => {
         const yesUserSex = userSex.current.value !== "성별을 골라주세요.";
