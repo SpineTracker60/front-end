@@ -11,6 +11,8 @@ import LoginPage from "./LoginPage/LoginPage";
 import PrivacyPolicy from "./terms/PrivacyPolicy";
 import ServiceTerm from "./terms/ServiceTerm";
 
+import { requestPermission } from './firebase-messaging-sw';
+
 function App(){
     const [authenticated, setAuthenticated] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
@@ -19,7 +21,8 @@ function App(){
         getCurrentUser()
         .then(response => {
         setCurrentUser(response);
-        setAuthenticated(true);     
+        setAuthenticated(true);  
+        requestPermission();   
         }).catch(error => {
         console.log(error);
         });
@@ -35,7 +38,7 @@ function App(){
         if(localStorage.getItem(ACCESS_TOKEN)){
         loadCurrentlyLoggedInUser();
         }
-    })
+    },[])
 
     return(
         <BrowserRouter>
