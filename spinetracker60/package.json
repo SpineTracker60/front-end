@@ -19,13 +19,23 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "axios": "^1.5.0",
+    "browserify-zlib": "^0.2.0",
+    "console-browserify": "^1.2.0",
     "dayjs": "^1.11.9",
     "express": "^4.18.2",
     "firebase": "^10.4.0",
     "framer-motion": "^10.16.4",
+    "install": "^0.13.0",
     "loader-utils": "^3.2.1",
+    "node-polyfill-webpack-plugin": "^2.0.1",
     "npm-check-updates": "^16.13.3",
+    "open-graph": "^0.2.6",
+    "open-graph-scraper": "^6.2.2",
+    "opengraph-io": "^3.0.1",
+    "opengraph-react": "^1.3.12",
+    "path-browserify": "^1.0.1",
     "pug": "^3.0.2",
+    "querystring-es3": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
@@ -33,11 +43,15 @@
     "react-webcam": "^7.1.1",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
-    "web-vitals": "^3.4.0"
+    "stream": "^0.0.2",
+    "undici": "^5.25.2",
+    "web-streams-node": "^0.4.0",
+    "web-vitals": "^3.4.0",
+    "webpack": "^5.88.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -58,5 +72,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "assert": "^2.1.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "process": "^0.11.10",
+    "react-app-rewired": "^2.2.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "url": "^0.11.3"
   }
 }
