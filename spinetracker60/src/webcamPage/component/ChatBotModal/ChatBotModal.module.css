@@ -79,3 +79,68 @@
     top: 14px;
     margin-left: 20px;
 }
+
+.contentsFrame{
+    width: 384px;
+    height: 494px;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+.chatExample{
+    display: flex;
+}
+.chatBotChatDiv{
+    margin-top: 10px;
+}
+.chatBotChatIcon{
+    width: 40px;
+    height: 40px;
+    padding: 5.974px 5.973px 5.546px 5.547px;
+    margin-top: 180px;
+}
+.chatBotChatting{
+    padding: 12px 14px;
+    align-items: flex-end;
+    gap: 10px;
+    border-radius: 12px;
+    background: var(--default-white, #FFF);
+    color: #000;
+    font-family: pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    width: 250px;
+    height: 220px;
+    white-space: pre-line;
+
+}
+
+.userChatDiv{
+    border-radius: 12px;
+    background: var(--primary-30, #A6C8FF);
+    justify-content: flex-end;
+    align-items: center;
+    color: var(--primary-90, #001D6C);
+    text-align: right;
+    font-family: pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+}
+.chatBotChattingDiv{
+    padding: 12px 14px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 12px;
+    background: var(--default-white, #FFF);
+    color: #000;
+    font-family: pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; 
+    width: 238px;
+}
