@@ -63,7 +63,7 @@ function NoticeBoard({writingModalWrapper, setWritingModalWrapper}) {
                     {posts.map((post) => (
                     <li key={post.board_id}>
                         <div className={style.postCard}>
-                            <div >
+                            <div>
                                 <div className={style.postUserInfo}>
                                     <img src={post.profile_image} className={style.userImg}/>
                                     <p className={style.userName}>{post.writer_name}님의 추천</p>

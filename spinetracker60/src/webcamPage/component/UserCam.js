@@ -11,6 +11,8 @@ import timeCalculator from "./utils/timeCalculator";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import style from "./UserCam.module.css"
+import axios from "axios";
+import { API_BASE_URL } from "../../constants";
 
 let detector;
 export let firstEyeHeight = '';
@@ -19,7 +21,11 @@ export let firstFaceDotHeight = '';
 function UserCam(props) {
   
   const [cameraState, setCameraState] = useState(false);
+  const [startTime, setStartTime] = useState(0);
+  const [focusTime, setFocusTime] = useState(0);
+  const [focusEnd, setFocusEnd] = useState(false);
   
+
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -32,7 +38,7 @@ function UserCam(props) {
     detector = await facemesh.createDetector(net, detectorConfig);
     setInterval(() => {
       detect(net);
-    }, 10);
+    }, 100);
   };
   // load posenet
   const runPosenet = async () => {
@@ -49,7 +55,9 @@ function UserCam(props) {
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
-      webcamRef.current.video.readyState === 4
+      webcamRef.current.video.readyState === 4 &&
+      !focusEnd
+      
     ) {
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
@@ -76,7 +84,8 @@ function UserCam(props) {
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
-      webcamRef.current.video.readyState === 4
+      webcamRef.current.video.readyState === 4 &&
+      !focusEnd
     ){
     const video = webcamRef.current.video;
     const videoWidth = webcamRef.current.video.videoWidth;
@@ -110,10 +119,19 @@ function UserCam(props) {
       "start_time" : nowTime,
       "end_time" : nowTime,
     }
+    axios.post(API_BASE_URL + "/posture/",[{
+      "posture_tag" : "START",
+      "date" : nowDay,
+      "start_time" : nowTime,
+      "end_time" : nowTime,
+      }],{
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      }
+    })
+    const nowStart = new Date().getTime();
+    setStartTime(nowStart);
     console.log(start);
-    console.log(util.eye_height);
-    console.log(util.face_size);
-    console.log(util.face_dot_height);
     firstEyeHeight = util.eye_height;
     firstFaceSize = util.face_size;
     firstFaceDotHeight = util.face_dot_height;
@@ -128,6 +146,17 @@ function UserCam(props) {
     "start_time" : nowTime,
     "end_time" : nowTime,
   }
+  axios.post(API_BASE_URL + "/posture/",[{
+    "posture_tag" : "END",
+    "date" : nowDay,
+    "start_time" : nowTime,
+    "end_time" : nowTime,
+  }],{
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }
+  })
+  setFocusEnd(!focusEnd);
   console.log(end);
   util.initParam();
   util2.initParam();
@@ -152,6 +181,20 @@ useEffect(() => {
     runPosenet();
 
   },[cameraState]);
+
+useEffect(()=>{
+  setFocusTime(timeCalculator(new Date().getTime() - startTime));
+  if((new Date().getTime() - startTime) % 1800000 == 0){
+    axios.post(API_BASE_URL + "/posture/",util.updateLeanList.concat([...util.updateTurtleList, ...util.updateSleepList, ...util2.updateShoulderList]),{
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      }
+  })
+  // console.log(util.updateLeanList.concat(util.updateTurtleList, util.updateSleepList, util2.updateShoulderList));
+    util.initFaceList();
+    util2.initPoseList();
+  }
+});
 
 if (!cameraState){
   return (
@@ -195,16 +238,23 @@ if (!cameraState){
           
       </motion.div>
       <div className={style.buttonDiv}>
-          <button type="button" onClick={onClickStart}>시작</button>
-          <button type="button" onClick={onClickEnd}>종료</button>
-          <button type="button" onClick={onClickHandler3}>시간 계산</button>
+          <button type="button" onClick={onClickStart} className={style.focusStartBtn}>
+            <p className={style.focusStart}>집중 시작 하기</p>
+          </button>
       </div>
     </>
     
   );
   }else{
+    if(!focusEnd){
     return(
     <>
+    <div className={style.todayFocus}>
+      <p className={style.todayFocusTimeP}>오늘의 집중 시간</p>
+      <p className={style.todayFocusTime}>{focusTime}</p>
+      <button type="button" onClick={onClickEnd} className={style.endBtn}>종료</button>
+      <button type="button" onClick={onClickHandler3}>시간 계산</button>
+    </div>
     
     <motion.div className={style.cameraDiv2}
           animate={{
@@ -243,14 +293,52 @@ if (!cameraState){
             }}
           />
       </motion.div>
-      
-      <div className={style.buttonDiv}>
-          <button type="button" onClick={onClickStart}>시작</button>
-          <button type="button" onClick={onClickEnd}>종료</button>
-          <button type="button" onClick={onClickHandler3}>시간 계산</button>
-      </div>
     </>
     )
+  }else{
+    return(
+      <>
+        <motion.div
+          animate={{
+            x: 0,
+            y: 0,
+            scale: 0,
+            rotate: 0,
+          }}>
+          <Webcam
+            ref={webcamRef}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 0,
+              right: 0,
+              textAlign: "center",
+              zindex: 9,
+              width: 640,
+              height: 480
+            }}
+          />
+
+          <canvas
+            ref={canvasRef}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 0,
+              right: 0,
+              textAlign: "center",
+              zindex: 9,
+              width: 640,
+              height: 480
+            }}
+          />
+        </motion.div>
+        <h1>종료</h1>
+      </>
+    )
+  }
   }
 }
 
