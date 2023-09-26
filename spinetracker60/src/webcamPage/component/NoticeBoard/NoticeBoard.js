@@ -1,50 +1,53 @@
 import { motion } from "framer-motion";
 import style from "./NoticeBoard.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../../../constants";
+import { useNavigate } from "react-router-dom";
 
 
 
-function NoticeBoard({writingModalWrapper, setWritingModalWrapper}) {
-    const [posts, setPosts] = useState([]);
-    const [writingModal, setWritingModal] = useState(false);
+function NoticeBoard({writingModalWrapper, setWritingModalWrapper, updateModalWrapper, setUpdateModalWrapper, user, board, setPosts, setUpdatePostId}) {
     
-
     
-    useEffect(() => {
-    axios.get(API_BASE_URL + "/board/list",{
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-        }
-    })
-    .then(response =>{
-        console.log(response.data);
-        setPosts(response.data);
-    })
-    },
-    [])
-    const writingModalHandler = () =>{
+    
+    
+    const boardListRef = useRef(null);
+    
+     
+
+    const navigate = useNavigate();
+    const updateModalHandler = (e) => {
+        setUpdateModalWrapper(!writingModalWrapper)
+        setUpdatePostId(e.target.value);
+    }
+    
+    const writingModalHandler = (e) =>{
         setWritingModalWrapper(!writingModalWrapper)
-        setWritingModal(!writingModal);
+    }
+    const deletePostHandler = (e) =>{
+        axios.delete(API_BASE_URL + `/board/${e.target.value}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        })
+        .then(response => {
+            console.log(response.status);
+            if(response.status === 204) {
+                axios.get(API_BASE_URL + "/board/list",{
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                    }
+                })
+                .then(response =>{
+                    setPosts(response.data.reverse());
+                })
+            }
+        }
+        )
+        
     }
 
-    let i = 0;  
-    useEffect(() => {
-        for(i; i < posts.length; i++){          
-            if(posts[i].postTitle.length > 19){
-                let maxTitle = posts[i].postTitle.slice(0, 19) + ' ...';
-                posts[i].postTitle = maxTitle;
-            }
-            if(posts[i].postBody.length > 85){
-                let maxBody = posts[i].postBody.slice(0, 85) + ' ...';
-                posts[i].postBody = maxBody;
-            }
-            posts[i].postBody = 
-            posts[i].postBody.slice(0, 31) + '\n' + posts[i].postBody.slice(31, 62) + '\n' + posts[i].postBody.slice(62, 85);
-        }
-        setPosts(posts);
-    },[])
 
 
     return(
@@ -60,14 +63,16 @@ function NoticeBoard({writingModalWrapper, setWritingModalWrapper}) {
             </div>
             <div className={style.noticeBoardDiv}>
                 <ul>
-                    {posts.map((post) => (
-                    <li key={post.board_id}>
+                    {board.map((post) => (
+                    <li key={post.board_id} >
                         <div className={style.postCard}>
                             <div>
                                 <div className={style.postUserInfo}>
                                     <img src={post.profile_image} className={style.userImg}/>
                                     <p className={style.userName}>{post.writer_name}님의 추천</p>
                                 </div>
+                                <button type="button" className={post.writer_id == user.id ? style.UBtn : style.none} onClick={updateModalHandler} value={post.board_id}>수정</button>
+                                <button type="button" ref={boardListRef} onClick={deletePostHandler} className={post.writer_id == user.id ? style.DBtn : style.none} value={post.board_id}>삭제</button>
                                 <div>
                                     <p className={style.postTitle}>{post.product_name}</p>
                                     <pre className={style.postBody}>{post.content}</pre>
@@ -75,7 +80,7 @@ function NoticeBoard({writingModalWrapper, setWritingModalWrapper}) {
                                 </div>                            
                             </div>
                             <div>
-                                <img src={post.image_url} className={style.productImg}/>
+                                <img src={"//" + post.image_url} className={style.productImg}/>
                             </div>
                             
                         </div>
