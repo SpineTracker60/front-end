@@ -24,6 +24,7 @@ function UserCam(props) {
   const [startTime, setStartTime] = useState(0);
   const [focusTime, setFocusTime] = useState(0);
   const [focusEnd, setFocusEnd] = useState(false);
+  const [endTime, setEndTime] = useState('');
   
 
   const webcamRef = useRef(null);
@@ -157,6 +158,7 @@ function UserCam(props) {
     }
   })
   setFocusEnd(!focusEnd);
+  setEndTime(focusTime);
   console.log(end);
   util.initParam();
   util2.initParam();
@@ -183,7 +185,9 @@ useEffect(() => {
   },[cameraState]);
 
 useEffect(()=>{
-  setFocusTime(timeCalculator(new Date().getTime() - startTime));
+  const timeInterval = setInterval(() => {
+    setFocusTime(timeCalculator(new Date().getTime() - startTime));
+  }, 1000);
   if((new Date().getTime() - startTime) % 1800000 == 0){
     axios.post(API_BASE_URL + "/posture/",util.updateLeanList.concat([...util.updateTurtleList, ...util.updateSleepList, ...util2.updateShoulderList]),{
       headers: {
@@ -194,7 +198,10 @@ useEffect(()=>{
     util.initFaceList();
     util2.initPoseList();
   }
-});
+
+  return () => clearInterval(timeInterval);
+
+},[]);
 
 if (!cameraState){
   return (
@@ -253,7 +260,7 @@ if (!cameraState){
       <p className={style.todayFocusTimeP}>오늘의 집중 시간</p>
       <p className={style.todayFocusTime}>{focusTime}</p>
       <button type="button" onClick={onClickEnd} className={style.endBtn}>종료</button>
-      <button type="button" onClick={onClickHandler3}>시간 계산</button>
+      {/* <button type="button" onClick={onClickHandler3}>시간 계산</button> */}
     </div>
     
     <motion.div className={style.cameraDiv2}
@@ -335,7 +342,16 @@ if (!cameraState){
             }}
           />
         </motion.div>
-        <h1>종료</h1>
+        <div className={style.endStateDiv}>
+          <p className={style.summaryBody}>
+            <p className={style.summaryTitle}>오늘의 서머리</p><br/>
+            일간 집중 시간 : {endTime}<br/>
+            일간 거북목 시간 : {timeCalculator(util.turtleTime)}<br/>
+            일간 졸음 시간 : {timeCalculator(util.sleepTime)}<br/>
+            일간 누움 시간 : {timeCalculator(util.leanTime)}<br/>
+            일간 어깨비대칭 시간 : {timeCalculator(util2.shoulderTime)}
+          </p>
+        </div>
       </>
     )
   }
