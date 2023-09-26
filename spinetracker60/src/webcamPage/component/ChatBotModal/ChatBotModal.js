@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 function ChatBotModal(props){
     const chat = useRef(null);
 
-    console.log('props.chatList : ',props.chatList);
+    // console.log('props.chatList : ',props.chatList);
 
     const [submitChatState, setSubmitChatState] = useState(false);
 
