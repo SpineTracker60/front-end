@@ -33,9 +33,12 @@ function LoginPage(props) {
         animate={{ opacity: 1, scale: 1 }} 
         transition={{duration: 0.8, delay: 0.5,ease: [0, 0.71, 0.2, 1.01]}}>
             <div className="login-content">
-                <p className={style.cheokchu1}>척추의 요정</p>
-                <p className={style.cheokchu2}>데스크 워커를 위한<br/>웹캠 기반 AI 자세 교정 서비스</p>
+                {/* <p className={style.cheokchu1}>척추의 요정</p> */}
+                <img src='/img/title.png'></img>
+                <p className={style.cheokchu2}>데스크 워커를 위한 웹캠 기반 AI 자세 교정 서비스</p>
                 <SocialLogin />
+                <img src='/img/foot.png' className={style.foot}/>
+                <img src='/img/helloworld.gif' className={style.helloworld}/>
             </div>
         </motion.div>
     );

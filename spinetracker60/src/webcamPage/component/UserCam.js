@@ -132,6 +132,8 @@ function UserCam(props) {
     })
     const nowStart = new Date().getTime();
     setStartTime(nowStart);
+    setFocusTime(null);
+    console.log("시간",focusTime);
     console.log(start);
     firstEyeHeight = util.eye_height;
     firstFaceSize = util.face_size;
@@ -159,6 +161,7 @@ function UserCam(props) {
   })
   setFocusEnd(!focusEnd);
   setEndTime(focusTime);
+  setFocusTime(null);
   console.log(end);
   util.initParam();
   util2.initParam();
@@ -201,7 +204,7 @@ useEffect(()=>{
 
   return () => clearInterval(timeInterval);
 
-},[]);
+},[startTime]);
 
 if (!cameraState){
   return (
@@ -258,10 +261,12 @@ if (!cameraState){
     <>
     <div className={style.todayFocus}>
       <p className={style.todayFocusTimeP}>오늘의 집중 시간</p>
-      <p className={style.todayFocusTime}>{focusTime}</p>
+      <p className={focusTime ? style.todayFocusTime : style.none}>{focusTime}</p>
       <button type="button" onClick={onClickEnd} className={style.endBtn}>종료</button>
       {/* <button type="button" onClick={onClickHandler3}>시간 계산</button> */}
     </div>
+    <img src="/img/dance.gif" className={style.dance1}/>
+    <img src="/img/dance.gif" className={style.dance2}/>
     
     <motion.div className={style.cameraDiv2}
           animate={{
@@ -305,6 +310,7 @@ if (!cameraState){
   }else{
     return(
       <>
+      <div className={style.endFrame}>
         <motion.div
           animate={{
             x: 0,
@@ -343,14 +349,19 @@ if (!cameraState){
           />
         </motion.div>
         <div className={style.endStateDiv}>
-          <p className={style.summaryBody}>
+          {/* <p className={style.summaryBody}>
             <p className={style.summaryTitle}>오늘의 서머리</p><br/>
             일간 집중 시간 : {endTime}<br/>
             일간 거북목 시간 : {timeCalculator(util.turtleTime)}<br/>
             일간 졸음 시간 : {timeCalculator(util.sleepTime)}<br/>
             일간 누움 시간 : {timeCalculator(util.leanTime)}<br/>
             일간 어깨비대칭 시간 : {timeCalculator(util2.shoulderTime)}
-          </p>
+          </p> */}
+          <img src="/img/endBackground.gif" className={style.fairy1}/>
+          <div>
+          <img src="/img/endGraph.png" className={style.fairy2}/>
+          </div>
+        </div>
         </div>
       </>
     )

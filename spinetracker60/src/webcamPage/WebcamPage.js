@@ -46,6 +46,7 @@ function WebcamPage(props){
     const [board, setBoard] = useState([]);
     const [updatePost, setUpdatePost] = useState({});
     const [updatePostId ,setUpdatePostId] = useState(0);
+    const [startModal, setStartModal] = useState(false);
 
     const variants = {
         open: { opacity : 1 , x: 0},
@@ -126,6 +127,10 @@ function WebcamPage(props){
     const chatBotModalHandler = () => {
         setChatBotModal(!chatBotModal);
     }
+    const startModalHandler = () => {
+        setStartModal(!startModal)
+    }
+
 
     
     const parseLinkHandler = () => {
@@ -197,8 +202,43 @@ function WebcamPage(props){
          
         
     // }
-    
+    let socket;
+    const ENDPOINT = API_BASE_URL_SOCKET2;
+//     useEffect(() => {
+        
 
+
+
+    
+    
+    
+//     socket = io(`${ENDPOINT}/room`, {
+//         transports: ["websocket"]
+//     });
+
+//     socket.connect();
+
+//     socket.on("join", (chat) => {
+//         console.log("성공");
+//     });
+
+//     socket.on("chat", (chat) => {
+//         if(chat) {
+//             if(chat.body){
+//                 console.log(chat.body);
+//                 }
+//                 if(chat.answer){
+//                 console.log(chat);
+//                 }
+//                 setChatList([...chatList, chat]);
+//                 //botChat.push(chat);
+//         }
+        
+// }
+
+//     );
+//     roomJoin(props.user.id, socket);
+//     },[ENDPOINT,socket])
 
 
 
@@ -207,34 +247,7 @@ function WebcamPage(props){
     const userImgUrl = props.user.profileImage;
     const userName = props.user.name;
 
-    let socket;
-
-
-
-    const ENDPOINT = API_BASE_URL_SOCKET2;
-    
-    
-    socket = io(`${ENDPOINT}/room`, {
-      transports: ["websocket"]
-    });
-
-    socket.connect();
-
-    socket.on("join", (chat) => {
-      console.log("성공");
-    });
-
-    socket.on("chat", (chat) => {
-        // console.log(chat.body);
-        // console.log(chat.answer);
         
-        setChatList([...chatList, chat]);
-        //botChat.push(chat);
-        
-}
-
-    );
-    roomJoin(props.user.id, socket);    
 
     // ChatBot(props);
     // Alarm();
@@ -247,6 +260,18 @@ function WebcamPage(props){
 
     return(
         <>  
+            <div className={!startModal ? style.startModal : style.none}>
+                <p className={style.style1}>정자세 측정을 위해<br/>바른 자세로 앉아주세요.</p>
+                <p className={style.style2}>정자세 측정은 최초 1회만 진행됩니다.</p>
+                <p className={style.style3}>
+                    1. 엉덩이를 최대한 뒤로 붙이고 앉습니다.<br/>
+                    2. 어깨를 펴고 등을 곧게 세웁니다.<br/>
+                    3. 무릎은 벌리지 않고 붙여서 90도로 바르게 둡니다.<br/>
+                    4. 모니터를 볼 때는 턱을 아래로 당겨줍니다.
+                </p>
+                <img src="/img/sitdown.png" className={style.startModalImg}/>
+                <button onClick={startModalHandler} className={style.startModalBtn}>네, 준비됐어요!</button>
+            </div>
             <div className={style.sideDiv}>
                 <motion.div className={style.sideBarDiv}>
                     <div className={style.userInfoDiv}>
@@ -279,6 +304,7 @@ function WebcamPage(props){
                     </div>
                     
                     <div className={style.logoutBtnDiv}>
+                        <img src="/img/logofit.png" className={style.logofit}/>
                         <motion.button type="button" onClick={props.onLogout} className={style.logoutBtn}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
