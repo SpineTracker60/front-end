@@ -1,6 +1,6 @@
-export const API_BASE_URL = 'http://192.168.0.19:9999';
-export const API_BASE_URL_SOCKET = 'http://192.168.0.19:3000';
-export const API_BASE_URL_SOCKET2 = '192.168.0.19:3030';
+export const API_BASE_URL = 'http://192.168.0.40:9999';
+export const API_BASE_URL_SOCKET = 'http://192.168.0.40:3000';
+export const API_BASE_URL_SOCKET2 = '192.168.0.40:3030';
 export const ACCESS_TOKEN = 'accessToken';
 export const REFRESH_TOKEN = 'refreshToken';
 

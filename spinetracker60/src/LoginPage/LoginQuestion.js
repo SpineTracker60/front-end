@@ -14,19 +14,19 @@ function LoginQuestion(props) {
     const agreeTerms = useRef(null);
 
     const navigate = useNavigate();
-    // useEffect(() => {
-    // axios.get(API_BASE_URL + '/member/info/added',{
-    //     headers: {
-    //         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
-    //     }
-    // })
-    // .then(function (response) {
-    //     if(response.data.is_added){
-    //         navigate('/main');
-    //     };
-    // });
-    // },
-    // []);
+    useEffect(() => {
+    axios.get(API_BASE_URL + '/member/info/added',{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
+    })
+    .then(function (response) {
+        if(response.data.is_added){
+            navigate('/main');
+        };
+    });
+    },
+    []);
 
     const buttonChangeStyle = () => {
         const yesUserSex = userSex.current.value !== "성별을 골라주세요.";
@@ -111,6 +111,7 @@ function LoginQuestion(props) {
         <>  
             <form>
                 <div className={style.questionFrame}>
+                    <img src='/img/logo.png' className={style.logo}></img>
                     <div className={style.questionFrameContents}>
                         <p className={style.loginQuestion}>회원가입 질문</p>
                         <p className={style.dapbyun}>답변해주신 내용은 제품 및 커뮤니티 추천에 사용됩니다.</p>
