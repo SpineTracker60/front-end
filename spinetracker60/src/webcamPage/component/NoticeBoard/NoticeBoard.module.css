@@ -6,7 +6,9 @@
 li{
     list-style: none;
 }
-
+.none{
+    display: none;
+}
 
 .frameDiv{
     position: relative;
@@ -42,7 +44,32 @@ li{
     height: 35px;
 }
 
-
+.UBtn{
+    border: none;
+    background-color: transparent;
+    color: var(--cool-gray-50, #878D96);
+    font-family: pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    position: relative;
+    left: 180px;
+    bottom: 26px;
+}
+.DBtn{
+    border: none;
+    background-color: transparent;
+    color: var(--cool-gray-50, #878D96);
+    font-family: pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    position: relative;
+    left: 200px;
+    bottom: 26px;
+}
 
 .noticeBoardDiv{
     margin-top: 65px;

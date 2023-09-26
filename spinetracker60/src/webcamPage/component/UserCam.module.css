@@ -29,7 +29,7 @@
 .todayFocus{
     position: absolute;
     margin: 0 auto;
-    top:  10%;
+    top:  20%;
     left: 60%;
     transform: translate(-50%, -50%);
 }
@@ -47,8 +47,7 @@
     text-align: center;
     font-family: roboto;
     font-size: 65.559px;
-    font-style: normal;
-    font-weight: 700;
+    font-weight: 900;
     line-height: 110%;
 }
 .focusStartBtn{
@@ -104,4 +103,32 @@
     top:  85%;
     left: 1200px;
     transform: translate(-50%, -50%);
+}
+
+
+
+
+.endStateDiv{
+    position: absolute;
+    display: flex;
+    margin: 0 auto;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.summaryTitle{
+    color: #000;
+    font-family: roboto;
+    font-size: 50.156px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 75.234px;
+}
+.summaryBody{
+    color: #000;
+    font-family: pretended;
+    font-size: 50.156px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 75.234px;
 }

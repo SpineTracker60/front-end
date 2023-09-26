@@ -1,7 +1,31 @@
+
+@font-face {
+    font-family: pretendard;
+    src: url(/public/fonts/PretendardVariable.ttf);
+}
+
 .frameDiv{
     position: relative;
     width: 380px;
     height: 955px;
     box-shadow: 0px 24px 48px 0px rgba(0, 0, 0, 0.20), 0px -24px 48px 0px #FFF inset;
     z-index: -1;
+    background: var(--cool-gray-10, #F2F4F8);
+}
+.dashboard{
+    position: relative;
+    top: 100px;
+    left: 35px;
+}
+.dashboard2{
+    color: #000;
+    font-family: pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px; /* 133.333% */
+    letter-spacing: -0.24px;
+    position: relative;
+    top: 50px;
+    left: 50px;
 }

@@ -182,6 +182,19 @@ textarea{
     width: 342px;
     height: 548px;
 }
+.updateModal{
+    position: absolute;
+    z-index: 10;
+
+    border-radius: 20px;
+    background: var(--cool-gray-10, #F2F4F8);
+    box-shadow: 0px 0px 48px 0px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    
+
+    width: 342px;
+    height: 395px;
+}
 .modalUserInfoDiv{
     display: flex;
 }
@@ -212,7 +225,7 @@ textarea{
 }
 .coupangLink{
     display: flex;
-    width: 286px;
+    width: 250px;
     height: 42px;
     padding-right: 15px;
     padding-left: 15px;
@@ -230,6 +243,14 @@ textarea{
 
     margin-left: 30px;
 }
+.searchBtn{
+    border: none;
+    background-color: transparent;
+    margin-left: 10px;
+}
+.searchDiv{
+    display: flex;
+}
 .writePost{
     color: var(--cool-gray-100, #121619);
 
@@ -246,6 +267,21 @@ textarea{
     border: none;
 
 }
+.updateWritePost{
+    color: var(--cool-gray-100, #121619);
+
+    font-family: pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+
+    width: 280px;
+    height: 198px;
+    margin-left: 33px;
+    margin-top: 16px;
+    border: none;
+}
 .linkArea{
     width: 280px;
     height: 110px;
@@ -253,6 +289,35 @@ textarea{
     margin-top: 10px;
     border-radius: 4px;
     background: var(--default-white, #FFF);
+}
+.idkArea{
+    display: flex;
+}
+.parsedProductName{
+    color: var(--cool-gray-90, #21272A);
+    font-family: pretendard;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20.133px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.parsedProductUrl{
+    color: var(--cool-gray-40, #A2A9B0);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: pretendard;
+    font-size: 5px;
+    font-weight: 400;
+    line-height: 5px;
+    position: absolute;
+    bottom: 100px;
+    left: 53px;
+}
+.parsedImageUrl{ 
+    margin-left: 13px;
+    height: 110px;
+    width: 110px;
 }
 .submitBtn{
     display: flex;
